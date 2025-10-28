@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MintHub - Plataforma Colaborativa</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica', Arial, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Header */
+        header {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2ea44f;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            min-width: 200px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 8px 12px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: 14px;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #2ea44f;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 5px 16px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            background: transparent;
+            color: #c9d1d9;
+        }
+
+        .btn:hover {
+            background: #30363d;
+        }
+
+        .btn-primary {
+            background: #2ea44f;
+            border-color: #2ea44f;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2c974b;
+        }
+
+        .btn-danger {
+            background: #da3633;
+            border-color: #da3633;
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 3px 12px;
+            font-size: 12px;
+        }
+
+        .user-badge {
+            padding: 5px 12px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .admin-badge {
+            border-color: #f85149;
+            color: #f85149;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: #0d1117;
+            border-bottom: 1px solid #21262d;
+            padding: 16px 0 0;
+            margin-top: 24px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .nav-tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: #8b949e;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .nav-tab:hover {
+            color: #c9d1d9;
+        }
+
+        .nav-tab.active {
+            color: #c9d1d9;
+            border-bottom-color: #f78166;
+        }
+
+        /* Content */
+        .content-section {
+            margin-top: 24px;
+            padding-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #21262d;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            border-color: #8b949e;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #58a6ff;
+            cursor: pointer;
+        }
+
+        .card-title:hover {
+            text-decoration: underline;
+        }
+
+        .card-serial {
+            background: #21262d;
+            color: #7ee787;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-meta {
+            color: #8b949e;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            color: #8b949e;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            padding: 2px 8px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #8b949e;
+        }
+
+        .tag-public {
+            border-color: #2ea44f;
+            color: #2ea44f;
+        }
+
+        .tag-private {
+            border-color: #f85149;
+            color: #f85149;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1, 4, 9, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 40px 16px;
+        }
+
+        .modal-content {
+            background: #0d1117;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+        }
+
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid #21262d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            color: #8b949e;
+            font-size: 24px;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #c9d1d9;
+        }
+
+        .modal-body {
+            padding: 16px;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2ea44f;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .alert-error {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid #f85149;
+            color: #f85149;
+        }
+
+        .alert-info {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid #58a6ff;
+            color: #58a6ff;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 17, 23, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #30363d;
+            border-top-color: #2ea44f;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #2ea44f;
+            margin-top: 16px;
+            font-size: 16px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8b949e;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #c9d1d9;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #8b949e;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2ea44f;
+        }
+
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Cargando MintHub...</div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="location.reload()">🌿 MintHub</div>
+                <div class="search-bar">
+                    <input type="text" id="globalSearch" placeholder="Buscar..." onkeypress="if(event.key==='Enter') performSearch()">
+                </div>
+                <div class="user-actions" id="userActions">
+                    <button class="btn btn-primary" onclick="showLogin()">Iniciar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showSection('repositories')">📦 Repositorios</div>
+            <div class="nav-tab" onclick="showSection('wikis')">📚 Wikis</div>
+            <div class="nav-tab hidden" id="chatTab">💬 Chats</div>
+            <div class="nav-tab hidden" id="adminTab" onclick="showSection('admin')">⚙️ Admin</div>
+        </div>
+
+        <div class="content-section" id="contentArea"></div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Iniciar Sesión</h3>
+                <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="loginMessage"></div>
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <input type="text" id="loginUsername" placeholder="Nombre de usuario">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="loginPassword" placeholder="Contraseña">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="login()">Iniciar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Admin Modal -->
+    <div class="modal" id="createAdminModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Administrador</h3>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <strong>¡Bienvenido!</strong><br>
+                    Crea tu cuenta de administrador.
+                </div>
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <input type="text" id="adminUsername" placeholder="Nombre de usuario">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="adminPassword" placeholder="Contraseña (mínimo 6 caracteres)">
+                </div>
+                <div class="form-group">
+                    <label>Confirmar</label>
+                    <input type="password" id="adminPasswordConfirm" placeholder="Confirma tu contraseña">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="createAdmin()">Crear Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Repo Modal -->
+    <div class="modal" id="createRepoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nuevo Repositorio</h3>
+                <span class="close-btn" onclick="closeModal('createRepoModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="repoTitle">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="repoDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Visibilidad</label>
+                    <select id="repoVisibility">
+                        <option value="public">🌍 Público</option>
+                        <option value="private">🔒 Privado</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="createRepository()">Crear</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Wiki Modal -->
+    <div class="modal" id="createWikiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nueva Wiki</h3>
+                <span class="close-btn" onclick="closeModal('createWikiModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="wikiTitle">
+                </div>
+                <div class="form-group">
+                    <label>Contenido</label>
+                    <textarea id="wikiContent" style="min-height: 200px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Portada (opcional)</label>
+                    <input type="url" id="wikiCover" placeholder="URL de imagen">
+                </div>
+                <div class="form-group">
+                    <label>Visibilidad</label>
+                    <select id="wikiVisibility">
+                        <option value="public">🌍 Público</option>
+                        <option value="private">🔒 Privado</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="createWiki()">Crear</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+        import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCtOpkUFa7OEAPY5kUmB0gdySs6PtD24ao",
+            authDomain: "mint-hub.firebaseapp.com",
+            projectId: "mint-hub",
+            storageBucket: "mint-hub.firebasestorage.app",
+            messagingSenderId: "739267708437",
+            appId: "1:739267708437:web:41a8c05cf826b738f5b01c"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Global
+        window.db = db;
+        window.collection = collection;
+        window.getDocs = getDocs;
+        window.addDoc = addDoc;
+        window.deleteDoc = deleteDoc;
+        window.doc = doc;
+
+        window.storage = {
+            users: [],
+            repositories: [],
+            wikis: [],
+            chats: [],
+            currentUser: null
+        };
+
+        // Init
+        async function init() {
+            try {
+                console.log('Iniciando MintHub...');
+                
+                // Cargar datos
+                const usersSnap = await getDocs(collection(db, 'users'));
+                window.storage.users = usersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                console.log('Usuarios cargados:', window.storage.users.length);
+
+                const reposSnap = await getDocs(collection(db, 'repositories'));
+                window.storage.repositories = reposSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                const wikisSnap = await getDocs(collection(db, 'wikis'));
+                window.storage.wikis = wikisSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                const chatsSnap = await getDocs(collection(db, 'chats'));
+                window.storage.chats = chatsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                // Verificar sesión
+                const session = localStorage.getItem('minthub_session');
+                if (session) {
+                    const { username } = JSON.parse(session);
+                    const user = window.storage.users.find(u => u.username === username);
+                    if (user) {
+                        window.storage.currentUser = user;
+                        window.updateUI();
+                    }
+                }
+
+                // Mostrar modal si no hay usuarios
+                if (window.storage.users.length === 0) {
+                    window.showModal('createAdminModal');
+                }
+
+                window.showSection('repositories');
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar. Recarga la página.');
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        window.addEventListener('load', init);
+    </script>
+
+    <script>
+        // Utils
+        function generateId() {
+            return Math.floor(10000 + Math.random() * 90000).toString();
+        }
+
+        function hashPassword(pass) {
+            let hash = 0;
+            for (let i = 0; i < pass.length; i++) {
+                hash = ((hash << 5) - hash) + pass.charCodeAt(i);
+                hash = hash & hash;
+            }
+            return hash.toString();
+        }
+
+        function showModal(id) {
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // UI
+        window.updateUI = function() {
+            const div = document.getElementById('userActions');
+            const chat = document.getElementById('chatTab');
+            const admin = document.getElementById('adminTab');
+
+            if (storage.currentUser) {
+                const isAdmin = storage.currentUser.role === 'admin';
+                div.innerHTML = `
+                    <div class="user-badge ${isAdmin ? 'admin-badge' : ''}">
+                        ${isAdmin ? '👑' : '👤'} ${storage.currentUser.username}
+                    </div>
+                    <button class="btn" onclick="logout()">Cerrar Sesión</button>
+                `;
+                chat.classList.remove('hidden');
+                if (isAdmin) admin.classList.remove('hidden');
+            } else {
+                div.innerHTML = '<button class="btn btn-primary" onclick="showLogin()">Iniciar Sesión</button>';
+                chat.classList.add('hidden');
+                admin.classList.add('hidden');
+            }
+        };
+
+        // Auth
+        window.createAdmin = async function() {
+            const user = document.getElementById('adminUsername').value.trim();
+            const pass = document.getElementById('adminPassword').value;
+            const conf = document.getElementById('adminPasswordConfirm').value;
+
+            if (!user || !pass) {
+                alert('Completa todos los campos');
+                return;
+            }
+
+            if (pass !== conf) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+
+            if (pass.length < 6) {
+                alert('Mínimo 6 caracteres');
+                return;
+            }
+
+            showLoading();
+            try {
+                const userId = generateId();
+                const admin = {
+                    username: user,
+                    password: hashPassword(pass),
+                    userId: userId,
+                    role: 'admin',
+                    createdAt: new Date().toISOString()
+                };
+
+                console.log('Creando admin:', admin);
+                const docRef = await addDoc(collection(db, 'users'), admin);
+                console.log('Admin creado con ID:', docRef.id);
+
+                admin.id = docRef.id;
+                storage.users.push(admin);
+                storage.currentUser = admin;
+                localStorage.setItem('minthub_session', JSON.stringify({ username: user }));
+
+                closeModal('createAdminModal');
+                updateUI();
+                alert(`¡Cuenta creada!\nTu ID: ${userId}`);
+                showSection('repositories');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al crear cuenta: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        };
+
+        function showLogin() {
+            document.getElementById('loginMessage').innerHTML = '';
+            showModal('loginModal');
+        }
+
+        window.login = function() {
+            const user = document.getElementById('loginUsername').value.trim();
+            const pass = document.getElementById('loginPassword').value;
+
+            const found = storage.users.find(u => u.username === user);
+
+            if (!found || found.password !== hashPassword(pass)) {
+                document.getElementById('loginMessage').innerHTML = 
+                    '<div class="alert alert-error">Usuario o contraseña incorrectos</div>';
+                return;
+            }
+
+            storage.currentUser = found;
+            localStorage.setItem('minthub_session', JSON.stringify({ username: user }));
+
+            closeModal('loginModal');
+            updateUI();
+            showSection('repositories');
+        };
+
+        window.logout = function() {
+            storage.currentUser = null;
+            localStorage.removeItem('minthub_session');
+            updateUI();
+            showSection('repositories');
+        };
+
+        // Sections
+        window.showSection = function(section) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            if (event?.target) event.target.classList.add('active');
+
+            const area = document.getElementById('contentArea');
+
+            if (section === 'repositories') {
+                const repos = storage.repositories.filter(r => r.visibility === 'public' || storage.currentUser);
+                let html = `
+                    <div class="section-header">
+                        <h2>📦 Repositorios</h2>
+                        ${storage.currentUser ? '<button class="btn btn-primary" onclick="showModal(\'createRepoModal\')">Nuevo</button>' : ''}
+                    </div>
+                `;
+
+                if (repos.length === 0) {
+                    html += '<div class="empty-state"><h3>No hay repositorios</h3></div>';
+                } else {
+                    html += '<div class="card-list">';
+                    repos.forEach(r => {
+                        const canEdit = storage.currentUser && (storage.currentUser.role === 'admin' || r.owner === storage.currentUser.username);
+                        html += `
+                            <div class="card">
+                                <div class="card-header">
+                                    <div>
+                                        <div class="card-title">${r.title}</div>
+                                        <div class="card-meta">${r.owner} • ${new Date(r.createdAt).toLocaleDateString()}</div>
+                                    </div>
+                                    <div class="card-serial">#${r.serial}</div>
+                                </div>
+                                <div class="card-description">${r.description}</div>
+                                <div class="card-tags">
+                                    <span class="tag ${r.visibility === 'public' ? 'tag-public' : 'tag-private'}">
+                                        ${r.visibility === 'public' ? '🌍 Público' : '🔒 Privado'}
+                                    </span>
+                                </div>
+                                ${canEdit ? `<div class="card-actions"><button class="btn btn-sm btn-danger" onclick="deleteRepo('${r.id}')">Eliminar</button></div>` : ''}
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                }
+                area.innerHTML = html;
+            } else if (section === 'wikis') {
+                const wikis = storage.wikis.filter(w => w.visibility === 'public' || storage.currentUser);
+                let html = `
+                    <div class="section-header">
+                        <h2>📚 Wikis</h2>
+                        ${storage.currentUser ? '<button class="btn btn-primary" onclick="showModal(\'createWikiModal\')">Nueva</button>' : ''}
+                    </div>
+                `;
+
+                if (wikis.length === 0) {
+                    html += '<div class="empty-state"><h3>No hay wikis</h3></div>';
+                } else {
+                    html += '<div class="card-list">';
+                    wikis.forEach(w => {
+                        const canEdit = storage.currentUser && (storage.currentUser.role === 'admin' || w.owner === storage.currentUser.username);
+                        html += `
+                            <div class="card">
+                                <div class="card-header">
+                                    <div>
+                                        <div class="card-title">${w.title}</div>
+                                        <div class="card-meta">${w.owner} • ${new Date(w.createdAt).toLocaleDateString()}</div>
+                                    </div>
+                                    <div class="card-serial">#${w.serial}</div>
+                                </div>
+                                <div class="card-description">${w.content.substring(0, 150)}...</div>
+                                <div class="card-tags">
+                                    <span class="tag ${w.visibility === 'public' ? 'tag-public' : 'tag-private'}">
+                                        ${w.visibility === 'public' ? '🌍 Público' : '🔒 Privado'}
+                                    </span>
+                                </div>
+                                ${canEdit ? `<div class="card-actions"><button class="btn btn-sm btn-danger" onclick="deleteWiki('${w.id}')">Eliminar</button></div>` : ''}
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                }
+                area.innerHTML = html;
+            } else if (section === 'admin') {
+                if (!storage.currentUser || storage.currentUser.role !== 'admin') {
+                    area.innerHTML = '<div class="empty-state"><h3>No autorizado</h3></div>';
+                    return;
+                }
+
+                const users = storage.users.filter(u => u.role !== 'admin');
+                let html = `
+                    <div class="section-header"><h2>⚙️ Admin</h2></div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Usuarios</div>
+                            <div class="stat-value">${storage.users.length}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Repositorios</div>
+                            <div class="stat-value">${storage.repositories.length}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Wikis</div>
+                            <div class="stat-value">${storage.wikis.length}</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin-bottom: 16px;">Crear Usuario</h3>
+                        <div class="form-group">
+                            <input type="text" id="newUser" placeholder="Usuario">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="newPass" placeholder="Contraseña">
+                        </div>
+                        <button class="btn btn-primary" onclick="createUser()">Crear</button>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin-bottom: 16px;">Usuarios</h3>
+                        <div class="user-list">
+                            ${users.length === 0 ? '<p style="color: #8b949e;">No hay usuarios</p>' : ''}
+                            ${users.map(u => `
+                                <div class="user-item">
+                                    <div>
+                                        <strong>${u.username}</strong>
+                                        <div style="font-size: 12px; color: #8b949e;">ID: ${u.userId}</div>
+                                    </div>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteUser('${u.id}')">Eliminar</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                area.innerHTML = html;
+            }
+        };
+
+        // Create
+        window.createRepository = async function() {
+            if (!storage.currentUser) return;
+
+            const title = document.getElementById('repoTitle').value.trim();
+            const desc = document.getElementById('repoDescription').value.trim();
+            const vis = document.getElementById('repoVisibility').value;
+
+            if (!title || !desc) {
+                alert('Completa todos los campos');
+                return;
+            }
+
+            showLoading();
+            try {
+                const serial = generateId();
+                const repo = {
+                    serial,
+                    title,
+                    description: desc,
+                    visibility: vis,
+                    owner: storage.currentUser.username,
+                    createdAt: new Date().toISOString()
+                };
+
+                const docRef = await addDoc(collection(db, 'repositories'), repo);
+                repo.id = docRef.id;
+                storage.repositories.push(repo);
+
+                closeModal('createRepoModal');
+                showSection('repositories');
+                alert(`Repo creado! Serial: #${serial}`);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al crear');
+            } finally {
+                hideLoading();
+            }
+        };
+
+        window.createWiki = async function() {
+            if (!storage.currentUser) return;
+
+            const title = document.getElementById('wikiTitle').value.trim();
+            const content = document.getElementById('wikiContent').value.trim();
+            const cover = document.getElementById('wikiCover').value.trim();
+            const vis = document.getElementById('wikiVisibility').value;
+
+            if (!title || !content) {
+                alert('Completa título y contenido');
+                return;
+            }
+
+            showLoading();
+            try {
+                const serial = generateId();
+                const wiki = {
+                    serial,
+                    title,
+                    content,
+                    cover: cover || null,
+                    visibility: vis,
+                    owner: storage.currentUser.username,
+                    createdAt: new Date().toISOString()
+                };
+
+                const docRef = await addDoc(collection(db, 'wikis'), wiki);
+                wiki.id = docRef.id;
+                storage.wikis.push(wiki);
+
+                closeModal('createWikiModal');
+                showSection('wikis');
+                alert(`Wiki creada! Serial: #${serial}`);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al crear');
+            } finally {
+                hideLoading();
+            }
+        };
+
+        window.createUser = async function() {
+            if (!storage.currentUser || storage.currentUser.role !== 'admin') return;
+
+            const user = document.getElementById('newUser').value.trim();
+            const pass = document.getElementById('newPass').value;
+
+            if (!user || !pass) {
+                alert('Completa los campos');
+                return;
+            }
+
+            if (storage.users.find(u => u.username === user)) {
+                alert('Usuario ya existe');
+                return;
+            }
+
+            showLoading();
+            try {
+                const userId = generateId();
+                const newUser = {
+                    username: user,
+                    password: hashPassword(pass),
+                    userId,
+                    role: 'user',
+                    createdAt: new Date().toISOString()
+                };
+
+                const docRef = await addDoc(collection(db, 'users'), newUser);
+                newUser.id = docRef.id;
+                storage.users.push(newUser);
+
+                alert(`Usuario creado! ID: ${userId}`);
+                showSection('admin');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al crear');
+            } finally {
+                hideLoading();
+            }
+        };
+
+        // Delete
+        window.deleteRepo = async function(id) {
+            if (!confirm('¿Eliminar?')) return;
+            showLoading();
+            try {
+                await deleteDoc(doc(db, 'repositories', id));
+                storage.repositories = storage.repositories.filter(r => r.id !== id);
+                showSection('repositories');
+            } catch (error) {
+                alert('Error');
+            } finally {
+                hideLoading();
+            }
+        };
+
+        window.deleteWiki = async function(id) {
+            if (!confirm('¿Eliminar?')) return;
+            showLoading();
+            try {
+                await deleteDoc(doc(db, 'wikis', id));
+                storage.wikis = storage.wikis.filter(w => w.id !== id);
+                showSection('wikis');
+            } catch (error) {
+                alert('Error');
+            } finally {
+                hideLoading();
+            }
+        };
+
+        window.deleteUser = async function(id) {
+            if (!confirm('¿Eliminar usuario?')) return;
+            showLoading();
+            try {
+                await deleteDoc(doc(db, 'users', id));
+                storage.users = storage.users.filter(u => u.id !== id);
+                showSection('admin');
+            } catch (error) {
+                alert('Error');
+            } finally {
+                hideLoading();
+            }
+        };
+
+        window.performSearch = function() {
+            alert('Búsqueda próximamente');
+        };
+    </script>
+</body>
+</html>
